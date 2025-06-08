@@ -29,14 +29,14 @@ function statement(invoice: Invoice, plays: Plays) {
   }).format;
   for(let perf of invoice.performances){
 
-    let thisAmount = amountFor(playFor(plays, perf), perf);
+    let thisAmount = amountFor(playFor(perf), perf);
     // add volume credits
     volumeCredits += Math.max(perf.audience - 30, 0);
     // add extra credit for every ten comedy attendees
-    if("comedy" === playFor(plays, perf).type) volumeCredits += Math.floor(perf.audience / 5);
+    if("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
     
     // print line for this order
-    result += ` ${playFor(plays, perf).name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
+    result += ` ${playFor(perf).name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
     totalAmount += thisAmount;
   }
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
@@ -44,13 +44,13 @@ function statement(invoice: Invoice, plays: Plays) {
   return result;
 }
 
-function playFor(plays: Plays, perf: Performance) {
+function playFor(perf: Performance) {
   return plays[perf.playID];
 }
 
 function amountFor(play: Play, aPerformance: Performance) {
   let result = 0;
-  switch (play.type) {
+  switch (playFor(aPerformance).type) {
     case "tragedy":
       result = 40000;
       if (aPerformance.audience > 30) {
@@ -65,7 +65,7 @@ function amountFor(play: Play, aPerformance: Performance) {
       result += 300 * aPerformance.audience;
       break;
     default:
-      throw new Error(`unknown type: ${play.type}`);
+      throw new Error(`unknown type: ${playFor(aPerformance).type}`);
   }
   return result;
 }
