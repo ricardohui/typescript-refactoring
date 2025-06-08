@@ -28,7 +28,7 @@ function statement(invoice: Invoice, plays: Plays) {
     minimumFractionDigits: 2,
   }).format;
   for(let perf of invoice.performances){
-    const play = plays[perf.playID];
+    const play = playFor(plays, perf);
     let thisAmount = amountFor(play, perf);
     // add volume credits
     volumeCredits += Math.max(perf.audience - 30, 0);
@@ -42,6 +42,10 @@ function statement(invoice: Invoice, plays: Plays) {
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits\n`;
   return result;
+}
+
+function playFor(plays: Plays, perf: Performance) {
+  return plays[perf.playID];
 }
 
 function amountFor(play: Play, aPerformance: Performance) {
