@@ -20,19 +20,15 @@ type Plays = {
 
 function statement(invoice: Invoice, plays: Plays) {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `Statement for ${invoice.customer}\n`;
 
   for(let perf of invoice.performances){
-
-    // add volume credits
-    volumeCredits += volumeCreditsFor(perf);
-    
     // print line for this order
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
     totalAmount += amountFor(perf);
   }
   
+  let volumeCredits = 0;
   for(let perf of invoice.performances){
     volumeCredits += volumeCreditsFor(perf);
   }
