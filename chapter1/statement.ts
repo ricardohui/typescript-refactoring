@@ -27,7 +27,7 @@ function statement(invoice: Invoice, plays: Plays) {
   }
 
   result += `Amount owed is ${usd(totalAmount())}\n`;
-  result += `You earned ${totalVolumeCredits} credits\n`;
+  result += `You earned ${totalVolumeCredits()} credits\n`;
   return result;
   
 
