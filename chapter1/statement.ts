@@ -3,6 +3,8 @@ import plays from "./plays.json";
 type Performance = {
   playID: string;
   audience: number;
+  play?: Play; // Optional property to hold the play details
+  amount?: number; // Optional property to hold the calculated amount
 };
 
 type Invoice = {
@@ -22,11 +24,21 @@ type Plays = {
 export function statement(invoice: Invoice, plays: Plays) {
   const statementData : StatementData  = {
     customer: invoice.customer,
-    performances: invoice.performances
+    performances: invoice.performances.map(enrichPerformance)
   };
   return renderPlainText(statementData, plays);
-}
 
+  function enrichPerformance(aPerformance: Performance): Performance {
+    const result = Object.assign({}, aPerformance);
+    result.play = playFor(aPerformance);
+    result.amount = amountFor(result);
+    return result;
+
+    function playFor(aPerformance: Performance): Play {
+      return plays[aPerformance.playID as keyof typeof plays];
+    }
+  }
+}
 
 type StatementData = {
   customer: string;
@@ -38,7 +50,8 @@ function renderPlainText(data: StatementData, plays: Plays) {
 
   for(let perf of data.performances){
     // print line for this order
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
+    
+    result += ` ${perf.play?.name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
   }
 
   result += `Amount owed is ${usd(totalAmount())}\n`;
@@ -76,7 +89,7 @@ function usd(aNumber: number) {
 function volumeCreditsFor(aPerformance: Performance){
   let result = 0;
   result += Math.max(aPerformance.audience - 30, 0);
-  if ("comedy" === playFor(aPerformance).type) {
+  if ("comedy" ===aPerformance.play?.type) {
     result += Math.floor(aPerformance.audience / 5);
   }
   return result;
@@ -88,7 +101,7 @@ function playFor(perf: Performance) : Play{
 
 function amountFor(aPerformance: Performance) {
   let result = 0;
-  switch (playFor(aPerformance).type) {
+  switch ((aPerformance).play?.type) {
     case "tragedy":
       result = 40000;
       if (aPerformance.audience > 30) {
@@ -103,7 +116,7 @@ function amountFor(aPerformance: Performance) {
       result += 300 * aPerformance.audience;
       break;
     default:
-      throw new Error(`unknown type: ${playFor(aPerformance).type}`);
+      throw new Error(`unknown type: ${(aPerformance).play?.type}`);
   }
   return result;
 }
