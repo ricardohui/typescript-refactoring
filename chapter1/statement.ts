@@ -4,8 +4,7 @@ type Performance = {
   playID: string;
   audience: number;
   play?: Play; // Optional property to hold the play details
-  amount?: number; // Optional property to hold the calculated amount
-};
+  amount?: number; };
 
 type Invoice = {
   customer: string;
@@ -51,7 +50,7 @@ function renderPlainText(data: StatementData, plays: Plays) {
   for(let perf of data.performances){
     // print line for this order
     
-    result += ` ${perf.play?.name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
+    result += ` ${perf.play?.name}: ${usd((perf).amount!)} (${perf.audience} seats)\n`;
   }
 
   result += `Amount owed is ${usd(totalAmount())}\n`;
@@ -70,7 +69,7 @@ function renderPlainText(data: StatementData, plays: Plays) {
   function totalAmount(){
       let totalAmount = 0;
       for(let perf of data.performances){
-        totalAmount += amountFor(perf);
+        totalAmount += (perf).amount!;
       }
       return totalAmount;
   }
