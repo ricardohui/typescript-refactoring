@@ -1,10 +1,13 @@
+import { totalmem } from "os";
 import invoices from "./invoices.json";
 import plays from "./plays.json";
 type Performance = {
   playID: string;
   audience: number;
   play?: Play; // Optional property to hold the play details
-  amount?: number; };
+  amount?: number;
+  volumeCredits?: number;
+};
 
 type Invoice = {
   customer: string;
@@ -19,60 +22,67 @@ type Plays = {
   [key: string]: Play;
 };
 
+type StatementData = {
+  customer: string;
+  totalAmount?: number;
+  totalVolumeCredits?: number;
+  performances: Performance[];
+};
 
 export function statement(invoice: Invoice, plays: Plays) {
   const statementData : StatementData  = {
     customer: invoice.customer,
     performances: invoice.performances.map(enrichPerformance)
   };
+
+    statementData.totalAmount= totalAmount(statementData)
+    statementData.totalVolumeCredits= totalVolumeCredits(statementData)
   return renderPlainText(statementData, plays);
 
   function enrichPerformance(aPerformance: Performance): Performance {
     const result = Object.assign({}, aPerformance);
     result.play = playFor(aPerformance);
     result.amount = amountFor(result);
+    result.volumeCredits = volumeCreditsFor(result);
     return result;
 
     function playFor(aPerformance: Performance): Play {
       return plays[aPerformance.playID as keyof typeof plays];
     }
+
   }
-}
-
-type StatementData = {
-  customer: string;
-  performances: Performance[];
-};
-
-function renderPlainText(data: StatementData, plays: Plays) {
-  let result = `Statement for ${data.customer}\n`;
-
-  for(let perf of data.performances){
-    // print line for this order
-    
-    result += ` ${perf.play?.name}: ${usd((perf).amount!)} (${perf.audience} seats)\n`;
-  }
-
-  result += `Amount owed is ${usd(totalAmount())}\n`;
-  result += `You earned ${totalVolumeCredits()} credits\n`;
-  return result;
   
-
-  function totalVolumeCredits(){
+  function totalVolumeCredits(data: StatementData) {
     let volumeCredits = 0;
     for(let perf of data.performances){
-      volumeCredits += volumeCreditsFor(perf);
-    }
+      volumeCredits += perf.volumeCredits!;    }
     return volumeCredits;
   }
 
-  function totalAmount(){
+  function totalAmount(data: StatementData) {
       let totalAmount = 0;
       for(let perf of data.performances){
         totalAmount += (perf).amount!;
       }
       return totalAmount;
   }
+}
+
+
+function renderPlainText(data: StatementData, plays: Plays) {
+  let result = `Statement for ${data.customer}\n`;
+
+  for(let perf of data.performances){
+    // print line for this order
+    result += ` ${perf.play?.name}: ${usd((perf).amount!)} (${perf.audience} seats)\n`;
+  }
+
+  result += `Amount owed is ${usd(data.totalAmount!)}\n`;
+  result += `You earned ${data.totalVolumeCredits} credits\n`;
+  return result;
+  
+
+  
 }
 
 
