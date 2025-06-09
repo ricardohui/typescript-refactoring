@@ -19,15 +19,24 @@ type Plays = {
 };
 
 
-function statement(invoice: Invoice, plays: Plays) {
-  return renderPlainText(invoice, plays);
+export function statement(invoice: Invoice, plays: Plays) {
+  const statementData : StatementData  = {
+    customer: invoice.customer,
+    performances: invoice.performances
+  };
+  return renderPlainText(statementData, plays);
 }
 
 
-function renderPlainText(invoice: Invoice, plays: Plays) {
-  let result = `Statement for ${invoice.customer}\n`;
+type StatementData = {
+  customer: string;
+  performances: Performance[];
+};
 
-  for(let perf of invoice.performances){
+function renderPlainText(data: StatementData, plays: Plays) {
+  let result = `Statement for ${data.customer}\n`;
+
+  for(let perf of data.performances){
     // print line for this order
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
   }
@@ -39,7 +48,7 @@ function renderPlainText(invoice: Invoice, plays: Plays) {
 
   function totalVolumeCredits(){
     let volumeCredits = 0;
-    for(let perf of invoice.performances){
+    for(let perf of data.performances){
       volumeCredits += volumeCreditsFor(perf);
     }
     return volumeCredits;
@@ -47,7 +56,7 @@ function renderPlainText(invoice: Invoice, plays: Plays) {
 
   function totalAmount(){
       let totalAmount = 0;
-      for(let perf of invoice.performances){
+      for(let perf of data.performances){
         totalAmount += amountFor(perf);
       }
       return totalAmount;
@@ -73,8 +82,8 @@ function volumeCreditsFor(aPerformance: Performance){
   return result;
 }
 
-function playFor(perf: Performance) {
-  return plays[perf.playID];
+function playFor(perf: Performance) : Play{
+  return plays[perf.playID as keyof typeof plays];
 }
 
 function amountFor(aPerformance: Performance) {
