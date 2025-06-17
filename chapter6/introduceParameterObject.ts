@@ -24,9 +24,9 @@ const station = {
     { temp: 51, time: "2016-11-10 13:00" }
   ]};
 
-  function readingOutsideRange(station, min, max, range) {
-    return station.readings.filter(r => r.temp < min || r.temp > max);
+  function readingOutsideRange(station, min, range: NumberRange) {
+    return station.readings.filter(r => r.temp < min || r.temp > range.max);
   }
   
   const range = new NumberRange(50, 55);
-  const alerts = readingOutsideRange(station, 50, 55, range);
+  const alerts = readingOutsideRange(station, 50, range);
