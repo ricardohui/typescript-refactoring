@@ -28,4 +28,5 @@ const station = {
     return station.readings.filter(r => r.temp < min || r.temp > max);
   }
   
-  const alerts = readingOutsideRange(station, 50, 55, null);
+  const range = new NumberRange(50, 55);
+  const alerts = readingOutsideRange(station, 50, 55, range);
