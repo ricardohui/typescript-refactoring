@@ -1,3 +1,19 @@
+class NumberRange {
+  _data;
+  constructor(min, max) {
+   this._data = { min, max };
+  }
+
+  get min() {
+    return this._data.min;
+  }
+
+  get max(){
+    return this._data.max;
+  }
+}
+
+
 const station = {
   name: "ZBI",
   readings: [
@@ -8,8 +24,8 @@ const station = {
     { temp: 51, time: "2016-11-10 13:00" }
   ]};
 
-  function readingOutsideRange(station, min, max) {
+  function readingOutsideRange(station, min, max, range) {
     return station.readings.filter(r => r.temp < min || r.temp > max);
   }
   
-  const alerts = readingOutsideRange(station, 50, 55);
+  const alerts = readingOutsideRange(station, 50, 55, null);
