@@ -13,3 +13,7 @@ function baseRate(month, year) {
 
 const aReading = acquireReading();
 const baseCharge = baseRate(aReading.month, aReading.year) * aReading.quantity;
+
+function calculateBaseCharge(aReading) {
+  return baseRate(aReading.month, aReading.year) * aReading.quantity;
+}
