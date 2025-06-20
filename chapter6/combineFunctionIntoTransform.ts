@@ -1,6 +1,7 @@
 const rawReading = acquireReading();
 const aReading = enrichReading(rawReading);
-const basicChargeAmount = calculateBaseCharge(aReading);
+const basicChargeAmount = aReading.baseCharge;
+
 
 function calculateBaseCharge(aReading) {
   return baseRate(aReading.month, aReading.year) * aReading.quantity;
@@ -8,5 +9,6 @@ function calculateBaseCharge(aReading) {
 
 function enrichReading(original){
   const result = Object.assign({}, original);
+  result.baseCharge = calculateBaseCharge(result);
   return result;
 }
