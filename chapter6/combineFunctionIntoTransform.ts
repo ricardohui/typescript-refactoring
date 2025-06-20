@@ -1,8 +1,6 @@
 const rawReading = acquireReading();
 const aReading = enrichReading(rawReading);
-const base = aReading.baseCharge;
-const taxableCharge = Math.max(0, aReading.baseCharge - taxThreshold(aReading.year)); 
-
+const taxableCharge = aReading.taxableCharge;
 
 
 
@@ -13,5 +11,6 @@ function calculateBaseCharge(aReading) {
 function enrichReading(original){
   const result = Object.assign({}, original);
   result.baseCharge = calculateBaseCharge(result);
+  result.taxableCharge = Math.max(0, result.baseCharge - taxThreshold(result.year));
   return result;
 }
