@@ -11,9 +11,39 @@ function baseRate(month, year) {
   return 0.05 * (year - 2020) + 0.01 * month;
 }
 
-const aReading = acquireReading();
-const baseCharge = calculateBaseCharge(aReading);
+class Reading{
+  _customer;
+  _quantity;
+  _month;
+  _year;
+  constructor(data) {
+    this._customer = data.customer;
+    this._quantity = data.quantity;
+    this._month = data.month;
+    this._year = data.year;
+  }
 
-function calculateBaseCharge(aReading) {
-  return baseRate(aReading.month, aReading.year) * aReading.quantity;
+  get customer() {
+    return this._customer;
+  }
+
+  get quantity() {
+    return this._quantity;
+  }
+
+  get month() {
+    return this._month;
+  }
+
+  get year() {
+    return this._year;
+  }
+
+ get calculateBaseCharge() {
+    return baseRate(this.month, this.year) * this.quantity;
+  }
 }
+
+const rawReading = acquireReading();
+const aReading = new Reading(rawReading);
+const baseCharge = aReading.calculateBaseCharge;
