@@ -44,6 +44,11 @@ class Reading{
   }
 }
 
+function taxThreshold(year) {
+  // Assume a simple tax threshold calculation for demonstration
+  return year < 2023 ? 100 : 200;
+}
+
 const rawReading = acquireReading();
 const aReading = new Reading(rawReading);
-const baseCharge = aReading.baseCharge;
+const taxableCharge = Math.max(0, aReading.baseCharge - taxThreshold(aReading.year));
