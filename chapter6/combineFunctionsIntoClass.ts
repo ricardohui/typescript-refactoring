@@ -42,7 +42,11 @@ class Reading{
  get baseCharge() {
     return baseRate(this.month, this.year) * this.quantity;
   }
+  get taxableCharge() {
+    return Math.max(0, aReading.baseCharge - taxThreshold(aReading.year));
+  }
 }
+
 
 function taxThreshold(year) {
   // Assume a simple tax threshold calculation for demonstration
@@ -51,8 +55,5 @@ function taxThreshold(year) {
 
 const rawReading = acquireReading();
 const aReading = new Reading(rawReading);
-const taxableCharge = taxableChargeFn(aReading)
+const taxableCharge = aReading.taxableCharge
 
-function taxableChargeFn(aReading: Reading) {
-  return Math.max(0, aReading.baseCharge - taxThreshold(aReading.year));
-}
