@@ -13,6 +13,9 @@ class Person1 {
     this._department = arg;
   }
 
+  get manager(){
+    return this._department ? this._department.manager : null;
+  }
 }
 
 class Department{
@@ -44,4 +47,4 @@ class Department{
 const person = new Person1("John Doe");
 const department = new Department("HR", person);
 person.department = department;
-console.log(`Person: ${person.department.manager}, Department Charge Code: ${person.department.chargeCode}`);
+console.log(`Person: ${person.manager}, Department Charge Code: ${person.department.chargeCode}`);
