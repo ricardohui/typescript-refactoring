@@ -3,7 +3,7 @@ function renderPerson(outStream, person){
   result.push(`<p>${person.name}</p>`);
   result.push(`renderPhoto(person.photo`);
   result.push(`<p>title: ${person.photo.title}</p>`);
-  result.push(emitPhotoData(person.photo));
+  result.push((emitPhotoData(person.photo)));
   return result.join("\n");
 }
 
@@ -11,16 +11,17 @@ function renderPerson(outStream, person){
 function photoDiv(p){
   return [
     "<div>",
-    `<p>title: ${p.title}</p>`,
-    emitPhotoData(p),
+    zznew(p),
     "</div>"
   ].join("\n");
 }
 
 
-function emitPhotoData(photo) {
-  const result = [];
-  result.push(`<p>location: ${photo.location}</p>`);
-  result.push(`<p>date: ${photo.date.toDateString()}</p>`);
-  return result.join("\n");
+
+function emitPhotoData(p) {
+  return [
+    `<p>title: ${p.title}</p>`,
+    `<p>location: ${p.location}</p>`,
+    `<p>date: ${p.date.toDateString()}</p>`,
+  ].join("\n");
 }
