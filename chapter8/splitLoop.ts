@@ -9,21 +9,11 @@ function toBeSplitLoop() {
   return `Youngest: ${youngestAge()}, Total Salary: ${totalSalary()}`;
 
   function youngestAge() {
-    let youngest = people[0] ? people[0].age : 999999999999999;
-    for (const person of people) {
-      if (person.age < youngest) {
-        youngest = person.age;
-      }
-    }
-    return youngest;
+    return Math.min(...people.map(person => person.age));
   }
 
   function totalSalary() {
-    let totalSalary = 0;
-    for (const person of people) {
-      totalSalary += person.salary;
-    }
-    return totalSalary;
+    return people.reduce((sum, person) => sum + person.salary, 0);
   }
 }
 
