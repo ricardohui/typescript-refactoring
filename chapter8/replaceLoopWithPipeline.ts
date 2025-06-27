@@ -2,7 +2,8 @@ function acquireDaa(input: string){
   const lines = input.split('\n');
   let firstLine = true;
   const result: {city: string, phone: string}[] = [];
-  for (const line of lines) {
+  const loopItems = lines
+  for (const line of loopItems) {
     if(firstLine){
       firstLine = false;
       continue;
