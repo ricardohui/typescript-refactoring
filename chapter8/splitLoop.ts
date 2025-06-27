@@ -13,5 +13,12 @@ function toBeSplitLoop() {
     }
     totalSalary += person.salary;
   }
+  
+  for (const person of people) {
+    if (person.age < youngest) {
+      youngest = person.age;
+    }
+    totalSalary += person.salary;
+  }
   return `Youngest: ${youngest}, Total Salary: ${totalSalary}`;
 }
