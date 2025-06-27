@@ -1,13 +1,9 @@
 function acquireDaa(input: string){
   const lines = input.split('\n');
-  let firstLine = true;
   const result: {city: string, phone: string}[] = [];
   const loopItems = lines
+    .slice(1) // Skip the first line
   for (const line of loopItems) {
-    if(firstLine){
-      firstLine = false;
-      continue;
-    }
     if (line.trim()==='') {
       continue;
     }
