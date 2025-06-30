@@ -2,7 +2,7 @@ class Organization{
   _title;
   _country;
   constructor(data) {
-    this._title = data.name;
+    this._title = (data.title !== undefined) ? data.title : data.name;
     this._country = data.country;
   }
   get name() {
@@ -20,6 +20,6 @@ class Organization{
 }
 
 const organization = {
-  name: "Tech Corp",
+  title: "Tech Corp",
   country: "GB"
 };
