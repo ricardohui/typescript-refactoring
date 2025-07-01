@@ -5,8 +5,9 @@ type Adjustment = {
 class ProductionPlan{
     private _production: string;
     _adjustments: Adjustment[] = [];
+
     get production(){
-      return this._production;
+      return this.calculatedProduction;
     }
 
     applyAdjustment(anAdjustment: Adjustment) {
