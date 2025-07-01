@@ -1,7 +1,11 @@
 if(isSummer()) {
-  charge = quantity * plan.summerRate;
+  charge = summerCharge();
 } else {
   charge = quantity * plan.regularRate + plan.regularServiceCharge;
+}
+
+function summerCharge(): any {
+  return quantity * plan.summerRate;
 }
 
 function isSummer() {
