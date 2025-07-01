@@ -1,8 +1,4 @@
-if(isSummer()) {
-  charge = summerCharge();
-} else {
-  charge = regularCharge();
-}
+charge = summer() ? summerCharge() : regularCharge();
 
 function regularCharge(): any {
   return quantity * plan.regularRate + plan.regularServiceCharge;
