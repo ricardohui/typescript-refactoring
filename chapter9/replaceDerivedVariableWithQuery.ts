@@ -4,19 +4,26 @@ type Adjustment = {
 
 class ProductionPlan{
     private _production: string;
-    _adjustments: Adjustment[] = [];
+    private _initialProduction: string;
+    private _productionAccumulator: number;
+    private _adjustments: Adjustment[];
 
+
+    constructor(production: string){
+      this._initialProduction = production;
+      this._productionAccumulator = 0;
+      this._adjustments = [];
+    }
     get production(){
-      return this.calculatedProduction;
+      return this._initialProduction + this._productionAccumulator;
     }
 
     applyAdjustment(anAdjustment: Adjustment) {
       this._adjustments.push(anAdjustment);
-      this._production += anAdjustment.amount;
     }
 
-    get calculatedProduction() {
-      return this._adjustments.reduce((sum, a)=> sum + a.amount,0);
+    get calculatedProductionAccumulator() {
+      return this._adjustments.reduce((total, adjustment) => total + adjustment.amount, 0);
     }
     
   }
