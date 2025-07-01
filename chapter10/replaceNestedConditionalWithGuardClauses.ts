@@ -1,14 +1,8 @@
 function payAmount(employee){
-  let result;
-  if (employee.isSeparated) {
-    result = { amount: 0, reasonCode: "SEP" };
-  } else {
-    if (employee.isRetired) {
-      result = { amount: 0, reasonCode: "RET" };
-    } else {
-      // logic to compuate the amount
-      result = someFinalComputation();
-    }
-  }
-  return result;
+  if (employee.isSeparated)  return { amount: 0, reasonCode: "SEP" }; 
+  if (employee.isRetired)  return { amount: 0, reasonCode: "RET" };
+    // logic to compuate the amount
+    return someFinalComputation();
+  
+  
 }
