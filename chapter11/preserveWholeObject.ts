@@ -30,9 +30,7 @@ const aRoom = new Room({ low: 18, high: 25 });
 const heatingPlan = new HeatingPlan({ low: 16, high: 26 });
 const alerts: string[] = [];
 
-const low = aRoom.daysTemperatureRange.low;
-const high = aRoom.daysTemperatureRange.high;
-if (!heatingPlan.withinRange(low, high)) {
+if (!heatingPlan.NEWwithinRange(aRoom.daysTemperatureRange)) {
   alerts.push("room temperature went outside range");
 }
 
