@@ -11,6 +11,11 @@ class HeatingPlan {
       top <= this._temperatureRange.high
     );
   }
+
+
+  NEWwithinRange(aNumberRange){
+    return this.withinRange(aNumberRange.low, aNumberRange.high);
+  }
 }
 
 class Room {
