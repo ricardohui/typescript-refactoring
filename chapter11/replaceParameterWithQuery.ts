@@ -17,11 +17,11 @@ class Order {
 
   get finalPrice() {
     const basePrice = this.quantity * this.item.price;
-    return this.discountedPrice(basePrice, this.discountLevel);
+    return this.discountedPrice(basePrice);
   }
 
-  discountedPrice(basePrice: number, discountLevel: number) {
-    switch (discountLevel) {
+  discountedPrice(basePrice: number) {
+    switch (this.discountLevel) {
       case 1:
         return basePrice * 0.98;
       case 2:
