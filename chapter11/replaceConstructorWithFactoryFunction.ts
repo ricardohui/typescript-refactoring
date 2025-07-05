@@ -32,3 +32,11 @@ const leadEngineer = new Employee(document.leadEngineer, "E");
 
 console.log(candidate.name, candidate.type); // Alice Manager
 console.log(leadEngineer.name, leadEngineer.type); // Bob Engineer
+
+function createEmployee(name, typeCode){
+  return new Employee(name, typeCode);
+}
+
+function createEngineer(name){
+  return new Employee(name, "E")
+}
