@@ -7,15 +7,17 @@ class Order {
     this.item = item;
   }
 
+  get discountLevel() {
+    if (this.quantity > 100) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
   get finalPrice() {
     const basePrice = this.quantity * this.item.price;
-    let discountLevel;
-    if (this.quantity > 100) {
-      discountLevel = 2;
-    } else {
-      discountLevel = 1;
-    }
-    return this.discountedPrice(basePrice, discountLevel);
+    return this.discountedPrice(basePrice, this.discountLevel);
   }
 
   discountedPrice(basePrice: number, discountLevel: number) {
