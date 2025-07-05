@@ -45,6 +45,6 @@ const thermostat = new Thermostat(22, 20);
 const thePlan = new HeatingPlan(18, 25);
 
 // Main logic
-if (thePlan.targetTemperature > thermostat.currentTemperature) setToHeat();
-else if (thePlan.targetTemperature < thermostat.currentTemperature) setToCool();
+if (thePlan.xxNEWtargetTemperature(thermostat.selectedTemperature) > thermostat.currentTemperature) setToHeat();
+else if (thePlan.xxNEWtargetTemperature(thermostat.selectedTemperature) < thermostat.currentTemperature) setToCool();
 else setToOff();
