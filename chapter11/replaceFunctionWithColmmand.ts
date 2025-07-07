@@ -20,17 +20,21 @@ class Scorer {
   this._healthLevel = 0;
   this._highMedicalRiskFlag = false;
 
-  if(this._medicalExam.isSmoker){
-    this._healthLevel += 10;
-    this._highMedicalRiskFlag = true;
-  }
+  this.scoreSmoking();
   let certificationGrade = "regular";
-  if (this._scoringGuide.stateWithLowCertificate(this._candidate.orgiinState){
+  if (this._scoringGuide.stateWithLowCertificate(this._candidate.orgiinState)){
     certificationGrade = "low";
     this._result -= 5;
   }
   // lot more code like this
   this._result -= Math.max(this._healthLevel - 5, 0);
   return this._result;
+  }
+
+  private scoreSmoking() {
+    if (this._medicalExam.isSmoker) {
+      this._healthLevel += 10;
+      this._highMedicalRiskFlag = true;
+    }
   }
 }
