@@ -1,23 +1,27 @@
 function score(candidate, medicalExam, scoringGuide){
-  return new Scorer(candidate).execute(medicalExam, scoringGuide) 
+  return new Scorer(candidate,medicalExam,scoringGuide).execute() 
 }
 
 class Scorer {
   _candidate
-  constructor(candidate){
+  _medicalExam;
+  _scoringGuide;
+  constructor(candidate, medicalExam, scoringGuide){
     this._candidate = candidate;
+    this._medicalExam = medicalExam;
+    this._scoringGuide = scoringGuide;
   }
-  execute(medicalExam, scoringGuide){
+  execute(){
   let result = 0;
   let healthLevel = 0;
   let highMeidcalRiskFlag = false;
 
-  if(medicalExam.isSmoker){
+  if(this._medicalExam.isSmoker){
     healthLevel += 10;
     highMeidcalRiskFlag = true;
   }
   let certificationGrade = "regular";
-  if (scoringGuide.stateWithLowCertificate(this._candidate.orgiinState){
+  if (this._scoringGuide.stateWithLowCertificate(this._candidate.orgiinState){
     certificationGrade = "low";
     result -= 5;
   }
