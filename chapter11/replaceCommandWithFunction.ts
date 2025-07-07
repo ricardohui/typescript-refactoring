@@ -19,4 +19,8 @@ class ChargeCalculator{
 
 }
 
-const monthCharge = new ChargeCalculator(customer, usage, provider).charge;
+const monthCharge = charge(customer, usage, provider);
+
+function charge(customer, usage, provider){
+  return new ChargeCalculator(customer, usage, provider).charge;
+}
