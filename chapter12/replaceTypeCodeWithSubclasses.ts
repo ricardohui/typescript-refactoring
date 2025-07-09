@@ -3,13 +3,9 @@ class Employee{
   _type;
 
   constructor(name, type){
-    this.validateType(type);
     this._name = name;
   }
-  validateType(arg){
-    if(!["engineer", "manager", "salesman"].includes(arg))
-      throw new Error(`Employee cannot be of type ${arg}`);
-  }
+  
   toString(){return `${this._name} (${this.type})`}
 
 }
@@ -31,6 +27,6 @@ function createEmployee(name, type){
     case "engineer": return new Engineer(name, type);
     case "salesman": return new Salesman(name, type);
     case "manager": return new Manager(name, type);
+    default: throw new Error(`Employee cannot be of type ${type}`)
   }
-  return new Employee(name, type);
 }
