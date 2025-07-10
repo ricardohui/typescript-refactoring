@@ -18,11 +18,9 @@ class Female extends Person{
 
 //client
 function loadFromInput(data){
-  const result = [];
-  data.forEach(aRecord =>{
-    result.push(createPerson(aRecord));
-  })
-  return result;
+  return data.forEach(aRecord =>
+    createPerson(aRecord)
+  )
 }
 
 function createPerson(aRecord){
