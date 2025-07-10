@@ -6,6 +6,7 @@ class Person{
 
   get name(){return this._name;}
   get genderCode(){return "X";}
+  get isMale(){return this instanceof Male;}
 }
 
 class Male extends Person{
@@ -32,4 +33,4 @@ function createPerson(aRecord){
 }
 
 
-const numberOfMales = people.filter(p => p instanceof Male).length;
+const numberOfMales = people.filter(p => p.isMale).length;
