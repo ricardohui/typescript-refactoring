@@ -1,17 +1,21 @@
-class Employee{
+class Party{
+  constructor(name){
+    this._name = name;
+  }
+  get name(){return this._name;}
+}
+
+class Employee extends Party{
   _id
-  _name
   _monthlyCost
 
   constructor(name, id, monthlyCost){
+    super(name);
     this._id = id;
-    this._name = name;
     this._monthlyCost = monthlyCost;
   }
 
   get monthlyCost() { return this._monthlyCost;}
-
-  get name(){return this._name;}
 
   get id(){return this._id}
   
@@ -21,17 +25,15 @@ class Employee{
 }
 
 
-class Department{
-  _name
+class Department extends Party{
   _staff
   
   constructor(name, staff){
-    this._name = name;
+    super(name);
     this._staff = staff;
   }
   get staff(){return this._staff.slice();}
-  get name(){return this._name;}
-  get totalMonthlyCost(){
+  get monthlyCost(){
     return this.staff.map(e => e.monthlyCost).reduce((sum, cost) => sum + cost);
   }
 
@@ -39,7 +41,7 @@ class Department{
     return this.staff.length;
   }
 
-  get totalAnnualCost(){
-    return this.totalMonthlyCost * 12;
+  get annualCost(){
+    return this.monthlyCost * 12;
   }
 }
