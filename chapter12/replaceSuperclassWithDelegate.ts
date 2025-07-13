@@ -17,11 +17,12 @@ class CatalogItem{
   hasTag(arg){ return this._tags.includes(arg);}
 }
 
-class Scroll extends CatalogItem {
+class Scroll{
+  _id
   _lastCleaned
   _catalogItem
   constructor(id, title, tags, dataLastCleaned) {
-    super(id, title, tags);
+    this._id = id;
     this._catalogItem = new CatalogItem(id, title, tags);
     this._lastCleaned = dataLastCleaned;
   }
@@ -42,3 +43,5 @@ class Scroll extends CatalogItem {
   get title(){return this._catalogItem.title;}
   hasTag(aString){return this._catalogItem.hasTag(aString)}
 }
+
+const scrolls = aDocument.map(record => new Scroll(record.id, record.catalogData.title, record.catalogData.tags, LocalDate.parse(record.lastCleaned)))
